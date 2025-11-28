@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Mi Aplicación</title>
+    <style>
+        .navbar {
+            background-color: #f8f9fa;
+            padding: 1rem;
+            border-bottom: 1px solid #dee2e6;
+            margin-bottom: 2rem;
+        }
+        .navbar a {
+            text-decoration: none;
+            color: #007bff;
+            margin-right: 1rem;
+            font-weight: 500;
+        }
+        .navbar a:hover {
+            color: #0056b3;
+            text-decoration: underline;
+        }
+        .container {
+            padding: 0 2rem;
+        }
+    </style>
+</head>
+<body>
+<!-- Incluir navbar desde fragmento -->
+<div th:replace="~{navbar :: navbar}"></div>
+
+<!-- Contenido principal -->
+<div class="container">
+    <h1>Bienvenido a la aplicación</h1>
+    <p>Esta es la página principal de la aplicación.</p>
+
+    <!-- Información de usuario -->
+    <div th:if="${session.usuario != null}">
+        <p>Bienvenido: <span th:text="${session.usuario.nombre}"></span></p>
+        <a th:href="@{/logout}" style="color: #dc3545;">Cerrar Sesión</a>
+    </div>
+
+    <div th:if="${session.usuario == null}">
+        <a th:href="@{/openLoginWindow}">Iniciar Sesión</a>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+</head>
+<body>
+<nav th:fragment="header" class="navbar">
+    <a th:href="@{/}">Home</a> |
+    <a th:href="@{/heroes}">Héroes</a> |
+    <a th:href="@{/ranking}">Ranking</a> |
+
+    <!-- Enlaces solo para usuarios autenticados -->
+    <span sec:authorize="isAuthenticated()">
+        <a th:href="@{/intenciones}">Intenciones</a> |
+    </span>
+
+    <!-- Enlace de administración solo para Admin -->
+    <span sec:authorize="hasAuthority('ADMIN')">
+        <a th:href="@{/heroes/admin}">Admin Héroes</a> |
+        <a th:href="@{/intenciones/admin}">Admin Intenciones</a> |
+    </span>
+
+    <!-- Información de usuario -->
+    <div style="margin-left: auto;">
+        <span sec:authorize="isAuthenticated()">
+            Bienvenido: <span sec:authentication="name"></span> |
+            <form th:action="@{/logout}" method="post" style="display: inline;">
+                <button type="submit" class="btn btn-link" style="padding: 0; border: none; background: none; color: #007bff;">
+                    Cerrar Sesión
+                </button>
+            </form>
+        </span>
+        <span sec:authorize="isAnonymous()">
+            <a th:href="@{/login}">Iniciar Sesión</a>
+        </span>
+    </div>
+</nav>
+</body>
+</html>
